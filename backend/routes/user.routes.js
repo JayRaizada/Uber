@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import { body } from "express-validator";
-import { registerUser } from "../controllers/user.controllers.js";
+import { loginUser, registerUser } from "../controllers/user.controllers.js";
 // import { isEmail, isLength, withMessage } from "validator";
 
 router.post(
@@ -16,6 +16,17 @@ router.post(
       .withMessage("Password must be at least 8 characters"),
   ],
   registerUser
+);
+
+router.post(
+  "/login",
+  [
+    body("email").isEmail().withMessage("invalid email"),
+    body("password")
+      .isLength({ min: 8 })
+      .withMessage("Password must be at least 8 characters"),
+  ],
+  loginUser
 );
 
 export default router;
